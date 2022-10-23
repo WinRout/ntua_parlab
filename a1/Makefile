@@ -1,0 +1,10 @@
+all: Game_Of_Life Game_Of_Life_gif
+
+Game_Of_Life: Game_Of_Life.c
+	gcc -O3 -fopenmp -o Game_Of_Life Game_Of_Life.c
+
+Game_Of_Life_gif: Game_Of_Life.c 
+	gcc -O3 -DOUTPUT -fopenmp -o Game_Of_Life_gif Game_Of_Life.c
+
+clean:
+	rm Game_Of_Life Game_Of_Life_gif *.out *.err *.gif
