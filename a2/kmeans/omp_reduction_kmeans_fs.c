@@ -82,7 +82,8 @@ void kmeans(float * objects,          /* in: [numObjs][numCoords] */
      * Allocate local cluster data with a "first-touch" policy.
      */
     // Initialize local (per-thread) arrays (and later collect result on global arrays)
-    for (k=0; k<nthreads; k++)
+    //for (k=0; k<nthreads; k++)
+    void initialize_local(int k)
     {
         local_newClusterSize[k] = (typeof(*local_newClusterSize)) calloc(numClusters, sizeof(**local_newClusterSize));
         local_newClusters[k] = (typeof(*local_newClusters)) calloc(numClusters * numCoords, sizeof(**local_newClusters));
@@ -103,16 +104,23 @@ void kmeans(float * objects,          /* in: [numObjs][numCoords] */
         /* 
          * TODO: Initiliaze local cluster data to zero (separate for each thread)
          */
-        for (k=0; k<nthreads; k++){
+        // for (k=0; k<nthreads; k++){
+        //     for (i=0; i<numClusters; i++) {
+        //         for (j=0; j<numCoords; j++)
+        //             local_newClusters[k][i*numCoords + j] = 0.0;
+        //         local_newClusterSize[k][i] = 0;
+        //     } 
+        // }
+
+        #pragma omp parallel private(i, j, index) reduction(+:delta)
+        {
+            int k = omp_get_thread_num();
+            initialize_local(k);
             for (i=0; i<numClusters; i++) {
                 for (j=0; j<numCoords; j++)
                     local_newClusters[k][i*numCoords + j] = 0.0;
                 local_newClusterSize[k][i] = 0;
             } 
-        }
-
-        #pragma omp parallel private(i, j, index) reduction(+:delta)
-        {
             #pragma omp for
             for (i=0; i<numObjs; i++)
             {

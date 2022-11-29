@@ -82,14 +82,13 @@ void kmeans(float * objects,          /* in: [numObjs][numCoords] */
      * Allocate local cluster data with a "first-touch" policy.
      */
     // Initialize local (per-thread) arrays (and later collect result on global arrays)
-    for (k=0; k<nthreads; k++)
-    {
-        local_newClusterSize[k] = (typeof(*local_newClusterSize)) calloc(numClusters, sizeof(**local_newClusterSize));
-        local_newClusters[k] = (typeof(*local_newClusters)) calloc(numClusters * numCoords, sizeof(**local_newClusters));
-    }
+    // for (k=0; k<nthreads; k++)
+    // {
+    //     local_newClusterSize[k] = (typeof(*local_newClusterSize)) calloc(numClusters , sizeof(**local_newClusterSize));
+    //     local_newClusters[k] = (typeof(*local_newClusters)) calloc(numClusters * numCoords , sizeof(**local_newClusters));
+    // }
 
     timing = wtime();
-
     do {
         // before each loop, set cluster data to 0
         for (i=0; i<numClusters; i++) {
@@ -102,20 +101,22 @@ void kmeans(float * objects,          /* in: [numObjs][numCoords] */
 
         /* 
          * TODO: Initiliaze local cluster data to zero (separate for each thread)
-         */
-        for (k=0; k<nthreads; k++){
-            for (i=0; i<numClusters; i++) {
-                for (j=0; j<numCoords; j++)
-                    local_newClusters[k][i*numCoords + j] = 0.0;
-                local_newClusterSize[k][i] = 0;
-            } 
-        }
+         */   
 
-        #pragma omp parallel private(i, j, index) reduction(+:delta)
-        {
+        // for (i=0; i<numClusters; i++) {
+        //     for (j=0; j<numCoords; j++)
+        //         local_newClusters[omp_get_thread_num()][i*numCoords + j] = 0.0;
+        //     local_newClusterSize[omp_get_thread_num()][i] = 0;
+        // } 
+
+         #pragma omp parallel private(i, j, index) reduction(+:delta) 
+        {     
+
+            local_newClusterSize[omp_get_thread_num()] = (typeof(*local_newClusterSize)) calloc(numClusters , sizeof(**local_newClusterSize));
+            local_newClusters[omp_get_thread_num()] = (typeof(*local_newClusters)) calloc(numClusters * numCoords , sizeof(**local_newClusters));
+            
             #pragma omp for
-            for (i=0; i<numObjs; i++)
-            {
+            for (i=0; i<numObjs; i++) {
                 // find the array index of nearest cluster center 
                 index = find_nearest_cluster(numClusters, numCoords, &objects[i*numCoords], clusters);
                 
@@ -131,15 +132,16 @@ void kmeans(float * objects,          /* in: [numObjs][numCoords] */
                 * TODO: Collect cluster data in local arrays (local to each thread)
                 *       Replace global arrays with local per-thread
                 */
+                
                 local_newClusterSize[omp_get_thread_num()][index]++;
                 for (j=0; j<numCoords; j++)
                     local_newClusters[omp_get_thread_num()][index*numCoords + j] += objects[i*numCoords + j];
             }
         }
         /*
-         * TODO: Reduction of cluster data from local arrays to shared.
-         *       This operation will be performed by one thread
-         */
+        * TODO: Reduction of cluster data from local arrays to shared.
+        *       This operation will be performed by one thread
+        */
         for (k=0; k<nthreads; k++) {
             for (i=0; i<numClusters; i++) {
                 for (j=0; j<numCoords; j++)
@@ -148,7 +150,6 @@ void kmeans(float * objects,          /* in: [numObjs][numCoords] */
             }
         }
 
-
         // average the sum and replace old cluster centers with newClusters 
         for (i=0; i<numClusters; i++) {
             for (j=0; j<numCoords; j++) {
@@ -156,6 +157,7 @@ void kmeans(float * objects,          /* in: [numObjs][numCoords] */
                     clusters[i*numCoords + j] = newClusters[i*numCoords + j] / newClusterSize[i];
             }
         }
+        
             
         // Get fraction of objects whose membership changed during this loop. This is used as a convergence criterion.
         delta /= numObjs;

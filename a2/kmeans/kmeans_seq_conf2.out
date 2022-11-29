@@ -10,7 +10,7 @@ clusters[3] =   6.66
 
 Sequential Kmeans
 	completed loop 1	completed loop 2	completed loop 3	completed loop 4	completed loop 5	completed loop 6	completed loop 7	completed loop 8	completed loop 9	completed loop 10
-        nloops =  10   (total = 10.0296s)  (per loop =  1.0030s)
+        nloops =  10   (total =  9.9499s)  (per loop =  0.9950s)
 
 Final cluster centers:
 clusters[0] =   1.30 

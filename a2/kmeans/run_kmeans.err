@@ -1,3 +1,1 @@
-rm: cannot remove 'kmeans_seq_conf2.out': No such file or directory
-/var/spool/torque/mom_priv/jobs/489978.localhost.SC: line 46: syntax error near unexpected token `done'
-/var/spool/torque/mom_priv/jobs/489978.localhost.SC: line 46: `done'
+rm: cannot remove 'kemans_omp_reduction_conf2.out': No such file or directory
