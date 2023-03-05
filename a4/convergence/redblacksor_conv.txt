@@ -1,0 +1,2 @@
+RedBlackSOR X 1024 Y 1024 Px 8 Py 8 Iter 2501 ComputationTime 0.315297 TotalTime 2.508348 midpoint 5.642974
+RedBlackSOR X 1024 Y 1024 Px 8 Py 8 Iter 2501 ComputationTime 0.312853 TotalTime 2.440067 midpoint 5.642974

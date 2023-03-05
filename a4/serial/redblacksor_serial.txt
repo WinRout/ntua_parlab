@@ -1,0 +1,1 @@
+RedBlackSOR X 1024 Y 1024 Iter 2500 Time 13.740720 midpoint 5.642974

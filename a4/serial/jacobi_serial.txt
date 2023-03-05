@@ -1,0 +1,1 @@
+Jacobi X 1024 Y 1024 Iter 798200 Time 1267.132213 midpoint 5.431022

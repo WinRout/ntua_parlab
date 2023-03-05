@@ -1,0 +1,2 @@
+GaussSeidelSOR X 1024 Y 1024 Px 8 Py 8 Iter 3201 ComputationTime 0.611865 TotalTime 13.214487 midpoint 5.642998
+GaussSeidelSOR X 1024 Y 1024 Px 8 Py 8 Iter 3201 ComputationTime 0.609648 TotalTime 13.109266 midpoint 5.642998

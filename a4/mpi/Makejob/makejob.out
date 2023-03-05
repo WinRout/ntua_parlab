@@ -1,0 +1,2 @@
+mpicc -O3 -lm -Wall -DTEST_CONV mpi_Jacobi.c utils.c -o jacobi_conv
+Makefile:18: recipe for target 'jacobi_conv' failed

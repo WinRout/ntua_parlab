@@ -1,0 +1,2 @@
+Jacobi X 1024 Y 1024 Px 8 Py 8 Iter 798201 ComputationTime 41.222646 TotalTime 535.426153 midpoint 5.431022
+Jacobi X 1024 Y 1024 Px 8 Py 8 Iter 798201 ComputationTime 41.061476 TotalTime 522.877520 midpoint 5.431022

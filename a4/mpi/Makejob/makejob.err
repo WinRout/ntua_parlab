@@ -1,0 +1,21 @@
+mpi_Jacobi.c: In function 'main':
+mpi_Jacobi.c:107:10: warning: assignment from incompatible pointer type
+   U_start=&(U[0][0]);
+          ^
+mpi_Jacobi.c:320:26: error: too few arguments to function 'converge'
+                converged=converge(u_previous,u_current,local[0],local[1]);
+                          ^
+In file included from mpi_Jacobi.c:6:0:
+utils.h:8:5: note: declared here
+ int converge(double ** u_previous, double ** u_current, int i_min, int i_max, int j_min, int j_max);
+     ^
+mpi_Jacobi.c:347:12: warning: assignment from incompatible pointer type
+    U_start = &(U[0][0]);
+            ^
+mpi_Jacobi.c:28:13: warning: unused variable 'status' [-Wunused-variable]
+  MPI_Status status;
+             ^
+mpi_Jacobi.c:16:9: warning: variable 'omega' set but not used [-Wunused-but-set-variable]
+  double omega;    //relaxation factor - useless for Jacobi
+         ^
+make: *** [jacobi_conv] Error 1

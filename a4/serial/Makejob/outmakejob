@@ -1,0 +1,2 @@
+gcc -O3 -lm -Wall -DPRINT_RESULTS -DTEST_CONV GaussSeidelSOR_serial.c utils.c -o seidelsor
+gcc -O3 -lm -Wall -DPRINT_RESULTS -DTEST_CONV RedBlackSOR_serial.c utils.c -o redblacksor
